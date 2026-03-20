@@ -21,44 +21,81 @@ function Button({ children, className = "", variant = "primary", disabled = fals
 const slides = [
   {
     type: "hero",
-    title: "LIBRA OS",
-    subtitle: "Agentic AI 기반 다이렉트 인덱싱 자동 운용 시스템",
+    eyebrow: "Agentic AI 기반",
+    title: "다이렉트 인덱싱\n포트폴리오 자동 리밸런싱\n및 비용 최적화 시스템",
+    subtitle: "",
   },
   {
-    type: "statement",
-    kicker: "Problem",
-    title: "개인 투자자는 포트폴리오를 꾸준히 관리하기 어렵다",
-    body:
-      "직접 종목과 비중을 정해도 시간이 지나면 포트폴리오 비중은 계속 틀어진다. 이를 다시 맞추려면 뉴스, 수수료, 슬리피지, 감정 통제까지 함께 고려해야 해서 직장인이 계속 해내기 어렵다.",
-    points: [
-      "비중 이탈을 계속 직접 확인해야 한다",
-      "비용을 계산하지 않으면 리밸런싱이 손해가 될 수 있다",
-      "판단과 실행 부담이 전부 사람에게 남아 있다",
+    type: "problem",
+    kicker: "문제 정의",
+    title: "왜 이 시스템이 필요한가",
+    quote:
+      "\"투자 철학이 있는 직장인 개인 투자자는 시장 변동으로 포트폴리오 비중이 지속적으로 틀어지지만, 이를 스스로 관리할 시간과 전문성이 부족하고 기존 자동화 도구는 개인의 철학을 반영하지 못한다.\"",
+    cards: [
+      {
+        title: "시간 제약",
+        body: "KRX 거래 시간(09:00~15:30)은 직장인 근무 시간과 완전히 겹친다.",
+      },
+      {
+        title: "감정적 편향",
+        body: "공포와 탐욕에 의한 패닉셀과 뇌동매매로 리밸런싱 기회를 스스로 놓치기 쉽다.",
+      },
+      {
+        title: "비용 판단 불가",
+        body: "수수료와 슬리피지를 계산하지 않으면 리밸런싱이 오히려 손해가 될 수 있다.",
+      },
     ],
   },
   {
     type: "compare",
-    kicker: "Limits",
-    title: "기존 도구로는 왜 해결되지 않았나",
-    description: "기존 도구마다 장점은 있었지만, 개인화와 자동화와 설명 가능성을 동시에 만족시키지는 못했다.",
-    headers: ["비교 항목", "ETF", "로보어드바이저", "현재 다이렉트 인덱싱"],
+    kicker: "문제 정의",
+    title: "기존 자동화 도구의 한계",
+    headers: ["구분", "개인화", "자동화", "비용 최적화", "핵심 한계 / 특징"],
+    gridTemplateColumns: "1.15fr 0.8fr 0.8fr 0.95fr 1.7fr",
     rows: [
-      ["개인화", "원하지 않는 종목까지 함께 담긴다", "전략 선택 폭이 제한적이다", "종목은 고를 수 있지만 판단은 여전히 단순하다"],
-      ["자동 실행", "없음", "추천 후 수동 실행이 많았다", "정해진 규칙 중심 실행이다"],
-      ["비용 판단", "세금·수수료 최적화가 어렵다", "비용보다 추천 자체에 집중했다", "비중 이탈 기준은 있어도 순이득 계산은 약하다"],
-      ["판단 설명", "왜 이 종목이 포함됐는지 제한적이다", "판단 근거가 블랙박스에 가깝다", "왜 지금 움직였는지 설명이 약하다"],
+      ["ETF\nBuy & Hold", "X", "✓", "✓", "운용사 전략 강제\n개인 철학 반영 불가"],
+      ["로보어드바이저", "X", "✓", "△", "전략 설계 불가\n블랙박스 의사결정"],
+      ["다이렉트\n인덱싱", "✓", "✓", "X", "단순 비중 이탈 기준\n비용 최적화 없음"],
+      ["LIBRA OS", "✓", "✓", "✓", "E[ΔU] > C 검증\nMulti-Agent AI 판단"],
     ],
   },
   {
-    type: "statement",
-    kicker: "Why Now",
-    title: "이제는 판단과 실행을 함께 자동화할 수 있다",
-    body:
-      "실행 구조는 이미 증권 API와 자동화 인프라로 갖춰졌고, Agentic AI가 뉴스와 공시를 읽어 중간의 판단 공백을 메울 수 있게 됐다.",
-    points: [
-      "뉴스와 공시를 자연어로 해석할 수 있다",
-      "여러 에이전트가 서로의 판단을 검증할 수 있다",
-      "판단 근거를 로그로 남길 수 있다",
+    type: "contrast",
+    kicker: "문제 정의",
+    title: "왜 지금인가 - Agentic AI의 등장",
+    leftTitle: "1세대 로보어드바이저의 실패",
+    leftItems: [
+      {
+        title: "낮은 수익률",
+        body: "연환산 3~4%대, 코스피200 하회",
+      },
+      {
+        title: "반쪽 자동화",
+        body: "AI 추천만, 실행은 수동",
+      },
+      {
+        title: "수익 구조 문제",
+        body: "낮은 수수료 -> 기술 투자 불가 -> 적자",
+      },
+      {
+        title: "타이밍 미스",
+        body: "금투세 폐지, 직접 투자 선호 트렌드",
+      },
+    ],
+    rightTitle: "Agentic AI로 처음 가능해진 것들",
+    rightItems: [
+      {
+        title: "자연어 시장 해석",
+        body: "뉴스와 공시를 LLM이 직접 분석해 투자 판단에 실시간 반영",
+      },
+      {
+        title: "다중 에이전트 교차 검증",
+        body: "Signal, Risk, Sentiment 에이전트가 독립적으로 판단한 뒤 합의",
+      },
+      {
+        title: "설명 가능한 AI",
+        body: "판단 근거를 텍스트 로그로 저장해 블랙박스 문제를 줄임",
+      },
     ],
   },
   {
@@ -221,7 +258,7 @@ const slides = [
     title: "어디까지 자동화하고, 어디서 멈추는가",
     leftTitle: "자동화하는 범위",
     leftItems: [
-      "포트폴리오 구성, 비용 정책, 정기 실행",
+      "포트폴리오 구성, 비용 정책, 세금 계산 자동화",
       "드리프트 감지, AI 판단, 주문 실행",
       "판단 로그 저장, 재현 테스트, 차단 이력 조회",
       "운영자 화면으로 상태 추적",
@@ -229,7 +266,7 @@ const slides = [
     rightTitle: "이번 단계에서 하지 않는 것",
     rightItems: [
       "종목 자동 추천과 투자 철학 생성",
-      "세금 계산 전 영역 완전 자동화",
+      "모든 예외 상황까지 포함한 절세 전략 전체 최적화",
       "수익률 보장이나 시장 초과 수익 약속",
       "해외 거래소와 다중 증권사 연동",
     ],
@@ -457,8 +494,28 @@ function SlideHeader({ kicker, title, description, compact = false }) {
 function HeroSlide({ slide }) {
   return (
     <div className="slide hero-slide">
-      <h1 className="hero-title">{slide.title}</h1>
-      <p className="hero-subtitle">{slide.subtitle}</p>
+      <div className="hero-block">
+        {slide.eyebrow ? <p className="hero-eyebrow">{slide.eyebrow}</p> : null}
+        <h1 className="hero-title">{slide.title}</h1>
+        {slide.subtitle ? <p className="hero-subtitle">{slide.subtitle}</p> : null}
+      </div>
+    </div>
+  );
+}
+
+function ProblemSlide({ slide }) {
+  return (
+    <div className="slide">
+      <SlideHeader kicker={slide.kicker} title={slide.title} />
+      <div className="problem-quote">{slide.quote}</div>
+      <div className="problem-grid">
+        {slide.cards.map((card) => (
+          <article key={card.title} className="problem-card">
+            <h3 className="problem-card-title">{card.title}</h3>
+            <p className="problem-card-body">{card.body}</p>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
@@ -474,6 +531,38 @@ function StatementSlide({ slide }) {
             {point}
           </article>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function ContrastSlide({ slide }) {
+  return (
+    <div className="slide">
+      <SlideHeader kicker={slide.kicker} title={slide.title} />
+      <div className="contrast-grid">
+        <section className="contrast-panel">
+          <div className="contrast-band">{slide.leftTitle}</div>
+          <div className="contrast-items">
+            {slide.leftItems.map((item) => (
+              <article key={item.title} className="contrast-item">
+                <h3 className="contrast-item-title">{item.title}</h3>
+                <p className="contrast-item-body">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="contrast-panel">
+          <div className="contrast-band">{slide.rightTitle}</div>
+          <div className="contrast-items">
+            {slide.rightItems.map((item) => (
+              <article key={item.title} className="contrast-item">
+                <h3 className="contrast-item-title">{item.title}</h3>
+                <p className="contrast-item-body">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
@@ -727,11 +816,13 @@ function ImageSlide({ slide }) {
 }
 
 function CompareSlide({ slide }) {
+  const gridTemplateColumns = slide.gridTemplateColumns || `repeat(${slide.headers.length}, minmax(0, 1fr))`;
+
   return (
     <div className="slide">
       <SlideHeader kicker={slide.kicker} title={slide.title} description={slide.description} />
       <div className="compare-table">
-        <div className="compare-row compare-header">
+        <div className="compare-row compare-header" style={{ gridTemplateColumns }}>
           {slide.headers.map((header) => (
             <div key={header} className="compare-cell compare-heading">
               {header}
@@ -739,7 +830,7 @@ function CompareSlide({ slide }) {
           ))}
         </div>
         {slide.rows.map((row) => (
-          <div key={row[0]} className="compare-row">
+          <div key={row[0]} className="compare-row" style={{ gridTemplateColumns }}>
             {row.map((cell, index) => (
               <div key={`${row[0]}-${index}`} className={`compare-cell ${index === 0 ? "compare-label" : ""}`}>
                 {cell}
@@ -841,8 +932,12 @@ function renderSlide(slide) {
   switch (slide.type) {
     case "hero":
       return <HeroSlide slide={slide} />;
+    case "problem":
+      return <ProblemSlide slide={slide} />;
     case "statement":
       return <StatementSlide slide={slide} />;
+    case "contrast":
+      return <ContrastSlide slide={slide} />;
     case "split":
       return <SplitSlide slide={slide} />;
     case "feature":
