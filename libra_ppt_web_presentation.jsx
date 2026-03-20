@@ -520,20 +520,20 @@ const slides = [
   {
     type: "dual",
     kicker: "Budget",
-    title: "예산과 사용 계획",
-    leftTitle: "예산",
+    title: "예산",
+    leftTitle: "예산 항목",
     leftItems: [
       "교육자료 구입비: 30만 원",
       "정보수집비: 70만 원",
       "서버는 EC2, RDS, S3 기준으로 사용",
       "AI API 비용은 추론 호출량 기준으로 집행",
     ],
-    rightTitle: "사용 원칙",
+    rightTitle: "주요 사용처",
     rightItems: [
-      "개발과 검증에 직접 필요한 비용부터 집행한다.",
-      "서버와 API 사용량은 시연 준비 시점까지 관리한다.",
-      "학습 자료는 실제 구현과 검증에 필요한 것만 구매한다.",
-      "불필요한 지출보다 시연 완성도와 안정성 확보를 우선한다.",
+      "교육자료 구입비는 인프런 등 강의 수강에 사용한다.",
+      "정보수집비는 EC2, RDS, S3 등 서버 운영 비용에 사용한다.",
+      "Gemini API 호출과 뉴스·공시 수집에 필요한 비용을 포함한다.",
+      "시연 전 테스트와 검증에 필요한 사용량까지 반영해 관리한다.",
     ],
   },
 ];
@@ -1082,11 +1082,14 @@ function renderSlide(slide) {
 export default function SlidePresentation() {
   const [index, setIndex] = useState(0);
   const wheelLockRef = useRef(0);
+  const touchStartXRef = useRef(null);
 
   const next = () => setIndex((current) => Math.min(current + 1, slides.length - 1));
   const prev = () => setIndex((current) => Math.max(current - 1, 0));
 
   const handleWheel = (event) => {
+    event.preventDefault();
+
     const now = Date.now();
     if (now - wheelLockRef.current < 500) return;
     if (Math.abs(event.deltaY) < 18) return;
@@ -1100,14 +1103,37 @@ export default function SlidePresentation() {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = event.clientX - rect.left;
 
-    if (x < rect.width * 0.18) prev();
-    if (x > rect.width * 0.82) next();
+    if (x < rect.width * 0.5) prev();
+    else next();
+  };
+
+  const handleTouchStart = (event) => {
+    touchStartXRef.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (event) => {
+    if (touchStartXRef.current == null) return;
+
+    const endX = event.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const deltaX = endX - touchStartXRef.current;
+    touchStartXRef.current = null;
+
+    if (Math.abs(deltaX) < 40) return;
+    if (deltaX < 0) next();
+    else prev();
   };
 
   useEffect(() => {
     const handleKey = (event) => {
-      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") next();
-      if (event.key === "ArrowLeft" || event.key === "PageUp") prev();
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        next();
+      }
+
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        prev();
+      }
     };
 
     window.addEventListener("keydown", handleKey);
@@ -1115,7 +1141,13 @@ export default function SlidePresentation() {
   }, []);
 
   return (
-    <main className="slide-surface" onWheel={handleWheel} onClick={handleSurfaceClick}>
+    <main
+      className="slide-surface"
+      onWheel={handleWheel}
+      onClick={handleSurfaceClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
