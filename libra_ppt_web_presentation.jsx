@@ -60,6 +60,63 @@ const slides = [
     ],
   },
   {
+    type: "scenario",
+    kicker: "USE CASE",
+    title: "LIBRA OS가 없었다면 vs 있었다면",
+    description: "가상 시나리오 — 실제 사용자 경험을 기반으로 구성",
+    profile: {
+      name: "김철수, 34세 · 직장인 개인투자자",
+      detail: "삼성전자 35% · TSMC 30% · 애플 20% · 현금 15% 보유 중 · 목표 비중 설정 후 6개월째 방치",
+      tag: "투자 철학 있음, 관리 시간 없음",
+    },
+    leftTitle: "LIBRA OS 없을 때",
+    leftItems: [
+      {
+        time: "오전 10:12",
+        title: "삼성전자 -4.3% 급락 뉴스",
+        body: "회의 중 카톡으로 확인. 아무것도 할 수 없음.",
+        quote: "\"지금 팔아야 하나... 버텨야 하나...\"",
+      },
+      {
+        time: "오후 3:30",
+        title: "장 마감, 여전히 아무것도 못 함",
+        body: "삼성전자 비중이 목표 35%에서 실제 29%로 이탈. 리밸런싱 타이밍을 놓침.",
+        quote: "\"내일 사야 하나? 더 떨어지면 어쩌지?\"",
+      },
+      {
+        time: "오후 8:00",
+        title: "퇴근 후 앱 열어서 확인",
+        body: "감정적으로 소량 매수. 수수료 계산 없이 결정.",
+        quote: "\"그냥 조금만 샀다... 맞는 건지 모르겠다\"",
+      },
+    ],
+    rightTitle: "LIBRA OS 있을 때",
+    rightItems: [
+      {
+        time: "오전 10:14",
+        title: "분석 에이전트 뉴스 감지",
+        body: "삼성전자 관련 뉴스 7건 분석. 단기 조정 가능성 판단, 신뢰도 0.81.",
+        quote: "\"비중 이탈 +5.8% 감지 -> 리밸런싱 검토 시작\"",
+      },
+      {
+        time: "오전 10:15",
+        title: "리밸런싱 에이전트 계산",
+        body: "추가 매수 시 거래비용 0.3%와 슬리피지를 반영해 순이득 E[ΔU] 계산.",
+        quote: "\"비용 > 이득 -> 이번엔 실행 안 함\"",
+      },
+      {
+        time: "오후 8:00",
+        title: "퇴근 후 앱에서 확인",
+        body: "오늘 판단 내역 1건 확인. 이유와 근거 로그를 바로 열람 가능.",
+        quote: "\"오늘 리밸런싱 안 한 이유 확인했다. 납득된다.\"",
+      },
+    ],
+    takeawayTitle: "\"실행하지 않는 것\"도 AI가 판단한다",
+    takeawayBody:
+      "기존 시스템은 비중 이탈 시 무조건 실행에 가깝지만, LIBRA OS는 비용과 위험을 먼저 계산하고 이득이 없으면 실행하지 않는다. 그 판단 과정도 모두 로그로 남긴다.",
+    takeawayTag: "E[ΔU] > C 검증",
+  },
+  {
     type: "contrast",
     kicker: "문제 정의",
     title: "왜 지금인가 - Agentic AI의 등장",
@@ -520,6 +577,61 @@ function ProblemSlide({ slide }) {
   );
 }
 
+function ScenarioSlide({ slide }) {
+  return (
+    <div className="slide scenario-slide">
+      <SlideHeader kicker={slide.kicker} title={slide.title} description={slide.description} compact />
+
+      <section className="scenario-profile">
+        <div className="scenario-avatar">김</div>
+        <div className="scenario-profile-copy">
+          <h3 className="scenario-profile-name">{slide.profile.name}</h3>
+          <p className="scenario-profile-detail">{slide.profile.detail}</p>
+        </div>
+        <div className="scenario-profile-tag">{slide.profile.tag}</div>
+      </section>
+
+      <div className="scenario-columns">
+        <section className="scenario-column negative">
+          <div className="scenario-column-head">{slide.leftTitle}</div>
+          <div className="scenario-timeline">
+            {slide.leftItems.map((item) => (
+              <article key={`${item.time}-${item.title}`} className="scenario-entry">
+                <p className="scenario-time">{item.time}</p>
+                <h3 className="scenario-entry-title">{item.title}</h3>
+                <p className="scenario-entry-body">{item.body}</p>
+                <p className="scenario-entry-quote">{item.quote}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="scenario-column positive">
+          <div className="scenario-column-head">{slide.rightTitle}</div>
+          <div className="scenario-timeline">
+            {slide.rightItems.map((item) => (
+              <article key={`${item.time}-${item.title}`} className="scenario-entry">
+                <p className="scenario-time">{item.time}</p>
+                <h3 className="scenario-entry-title">{item.title}</h3>
+                <p className="scenario-entry-body">{item.body}</p>
+                <p className="scenario-entry-quote">{item.quote}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <section className="scenario-takeaway">
+        <div>
+          <h3 className="scenario-takeaway-title">{slide.takeawayTitle}</h3>
+          <p className="scenario-takeaway-body">{slide.takeawayBody}</p>
+        </div>
+        <div className="scenario-takeaway-tag">{slide.takeawayTag}</div>
+      </section>
+    </div>
+  );
+}
+
 function StatementSlide({ slide }) {
   return (
     <div className="slide statement-slide">
@@ -934,6 +1046,8 @@ function renderSlide(slide) {
       return <HeroSlide slide={slide} />;
     case "problem":
       return <ProblemSlide slide={slide} />;
+    case "scenario":
+      return <ScenarioSlide slide={slide} />;
     case "statement":
       return <StatementSlide slide={slide} />;
     case "contrast":
